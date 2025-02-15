@@ -1,6 +1,7 @@
 import React from "react";
+import ReactPlayer from "react-player";
 import "./MediaLibrary.css";
-import brokenimage from "./images/broken-image.png";
+import brokenimage from "../images/brokenimage.png";
 
 const MediaLibrary = () => {
   const items = [

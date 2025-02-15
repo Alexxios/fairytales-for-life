@@ -2,13 +2,12 @@
 import { useRef, useState } from "react";
 import Player from "./components/PlayerSong";
 import Song from "./components/Song";
-// import "./styles/app.scss";
+import "./styles/app.scss";
 
 // Importing DATA
 import data from "./data";
 import Library from "./components/Library";
 import Nav from "./components/Navb";
-import Gallery from "./pages/Gallery";
 function App() {
   const [songs, setSongs] = useState(data());
   const [currentSong, setCurrentSong] = useState(songs[0]);
@@ -43,7 +42,36 @@ function App() {
   };
   return (
     <div>
-      <Gallery />
+      <Nav libraryStatus={libraryStatus} setLibraryStatus={setLibraryStatus} />
+      <Song currentSong={currentSong} />
+      <Player
+        id={songs.id}
+        songs={songs}
+        songInfo={songInfo}
+        setSongInfo={setSongInfo}
+        audioRef={audioRef}
+        isPlaying={isPlaying}
+        setIsPlaying={setIsPlaying}
+        currentSong={currentSong}
+        setCurrentSong={setCurrentSong}
+        setSongs={setSongs}
+      />
+      <Library
+        libraryStatus={libraryStatus}
+        setLibraryStatus={setLibraryStatus}
+        setSongs={setSongs}
+        isPlaying={isPlaying}
+        audioRef={audioRef}
+        songs={songs}
+        setCurrentSong={setCurrentSong}
+      />
+      <audio
+        onLoadedMetadata={timeUpdateHandler}
+        onTimeUpdate={timeUpdateHandler}
+        src={currentSong.audio}
+        ref={audioRef}
+        onEnded={songEndHandler}
+      ></audio>
     </div>
   );
 }

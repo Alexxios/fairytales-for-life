@@ -1,0 +1,65 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:13
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+
+  backend:
+    build: ../backend
+    container_name: backend_app
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: postgres
+      MEDIA_DIRECTORY: /app/media
+    ports:
+      - "8000:8000"
+    volumes:
+      - media:/app/media
+    networks:
+      - app-network
+
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   container_name: pgadmin
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: admin@example.com  # Логин для входа в pgAdmin
+  #     PGADMIN_DEFAULT_PASSWORD: admin           # Пароль для входа в pgAdmin
+  #   ports:
+  #     - "5050:80"  # Порт для доступа к pgAdmin
+  #   depends_on:
+  #     - db
+  #   networks:
+  #     - app-network
+      
+  frontend:
+    build: ../frontend
+    container_name: frontend_app
+    depends_on:
+      - backend
+    ports:
+      - "5173:5173"
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+  media:
+
+networks:
+  app-network:
+    driver: bridge

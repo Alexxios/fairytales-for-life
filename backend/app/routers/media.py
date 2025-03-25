@@ -1,11 +1,11 @@
 import os
-from typing import Annotated
+from typing import Annotated, List
 from datetime import datetime
 
-from fastapi import APIRouter, File, UploadFile, HTTPException, Depends
+from fastapi import APIRouter, File, UploadFile, HTTPException, Depends, Query
 from fastapi.responses import JSONResponse, FileResponse
 
-from sqlmodel import Session
+from sqlmodel import Session, select
 
 from ..database.database import get_session
 from ..models.media import Media
@@ -22,6 +22,43 @@ def allowed_file(filename: str) -> bool:
 
 
 router = APIRouter(prefix="/media")
+
+from fastapi import Query
+from typing import List
+from sqlmodel import select
+
+@router.get("/media/", response_model=List[Media])
+async def get_media_files(
+    db: Annotated[Session, Depends(get_session)],
+    limit: int = Query(default=10, gt=0, le=100, description="Maximum number of items to return"),
+    offset: int = Query(default=0, ge=0, description="Number of items to skip")
+):
+    """
+    Получить список медиафайлов с пагинацией
+    
+    Параметры:
+    - limit: максимальное количество возвращаемых записей (по умолчанию 10, максимум 100)
+    - offset: количество записей для пропуска (для пагинации)
+    """
+    try:
+        # Создаем запрос с лимитом и оффсетом
+        statement = select(Media).offset(offset).limit(limit)
+        results = db.exec(statement).all()
+        
+        if not results:
+            raise HTTPException(
+                status_code=404,
+                detail="No media files found"
+            )
+            
+        return results
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to fetch media files: {str(e)}"
+        )
+    
 
 @router.put("/upload")
 async def upload_media(

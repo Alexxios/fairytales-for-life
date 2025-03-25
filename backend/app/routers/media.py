@@ -3,6 +3,7 @@ from typing import Annotated, List
 from datetime import datetime
 
 from fastapi import APIRouter, File, UploadFile, HTTPException, Depends, Query
+from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse, FileResponse
 
 from sqlmodel import Session, select
@@ -22,12 +23,13 @@ def allowed_file(filename: str) -> bool:
 
 
 router = APIRouter(prefix="/media")
+# router.mount(MEDIA_DIRECTORY, StaticFiles(directory=MEDIA_DIRECTORY))
 
 from fastapi import Query
 from typing import List
 from sqlmodel import select
 
-@router.get("/media/", response_model=List[Media])
+@router.get("/", response_model=List[Media])
 async def get_media_files(
     db: Annotated[Session, Depends(get_session)],
     limit: int = Query(default=10, gt=0, le=100, description="Maximum number of items to return"),
@@ -131,14 +133,16 @@ async def upload_media(
         },
     )
 
-@router.get("/{filename}")
-async def get_file(filename: str):
-    """Возвращает файл из папки media."""
-    file_path = os.path.join(MEDIA_DIRECTORY, filename)
-    if not os.path.exists(file_path):
-        raise HTTPException(status_code=404, detail="File not found")
+# @router.get("/{filename}")
+# async def get_file(filename: str):
+#     """Возвращает файл из папки media."""
+#     file_path = os.path.join(MEDIA_DIRECTORY, filename)
+#     if not os.path.exists(file_path):
+#         raise HTTPException(status_code=404, detail="File not found")
 
-    return FileResponse(file_path)
+#     return FileResponse(file_path)
+
+
 
 @router.delete("/{filename}")
 async def delete_file(filename: str):

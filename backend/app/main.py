@@ -1,9 +1,11 @@
+import os
 from typing import Annotated, List
 
 import uvicorn
 
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from pydantic import BaseModel
 
@@ -37,6 +39,8 @@ class File(BaseModel):
 app = FastAPI()
 # app.include_router(auth.router)
 app.include_router(media.router)
+MEDIA_DIRECTORY = os.getenv('MEDIA_DIRECTORY')
+app.mount(MEDIA_DIRECTORY, StaticFiles(directory=MEDIA_DIRECTORY))
 
 origins = [
     "http://localhost:5173"

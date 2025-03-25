@@ -9,7 +9,7 @@ from pydantic import BaseModel
 
 from sqlmodel import Session
 
-from .database.database import get_session
+from .database.database import create_db_and_tables, get_session
 from .routers import media
         
 class Fruit(BaseModel):
@@ -86,6 +86,10 @@ def add_fruit(fruit: Fruit):
 def get_themes():
     return Themes(themes=memory_db["themes"])
 """
+
+@app.on_event("startup")
+def on_startup():
+    create_db_and_tables()
 
 @app.get("/test_connection")
 def test_connection(db: Annotated[Session, Depends(get_session)]):

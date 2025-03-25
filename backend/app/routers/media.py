@@ -102,3 +102,16 @@ async def get_file(filename: str):
         raise HTTPException(status_code=404, detail="File not found")
 
     return FileResponse(file_path)
+
+@router.delete("/{filename}")
+async def delete_file(filename: str):
+    file_path = os.path.join(MEDIA_DIRECTORY, filename)
+    if os.path.exists(file_path):
+        try:
+            os.remove(file_path)
+        except OSError as file_error:
+            raise HTTPException(
+                status_code=500,
+                detail=f"Failed to delete file: {file_error}"
+            )
+    return True

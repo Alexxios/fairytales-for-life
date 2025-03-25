@@ -1,9 +1,17 @@
-import uvicorn
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from typing import List
+from typing import Annotated, List
 
+import uvicorn
+
+from fastapi import FastAPI, Depends
+from fastapi.middleware.cors import CORSMiddleware
+
+from pydantic import BaseModel
+
+from sqlmodel import Session
+
+from .database.database import get_session
+from .routers import media
+        
 class Fruit(BaseModel):
     name: str
 
@@ -27,6 +35,8 @@ class File(BaseModel):
 
 
 app = FastAPI()
+# app.include_router(auth.router)
+app.include_router(media.router)
 
 origins = [
     "http://localhost:5173"
@@ -39,6 +49,7 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
+"""
 theme1 = Theme(
     name="Тема 1",
     subthemes=[
@@ -74,7 +85,11 @@ def add_fruit(fruit: Fruit):
 @app.get("/themes", response_model=Themes)
 def get_themes():
     return Themes(themes=memory_db["themes"])
+"""
 
+@app.get("/test_connection")
+def test_connection(db: Annotated[Session, Depends(get_session)]):
+    return db != None
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

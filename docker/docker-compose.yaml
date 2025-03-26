@@ -26,6 +26,9 @@ services:
       DB_PASSWORD: postgres
       DB_NAME: postgres
       MEDIA_DIRECTORY: /app/media
+      SECRET_KEY: 4311079a3c084fce0cac0fb21ab3e711a253b4e6d4bd2dbbe11f031a3ba31a33
+      ALGORITHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: 30
     ports:
       - "8000:8000"
     volumes:

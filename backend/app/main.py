@@ -12,7 +12,7 @@ from pydantic import BaseModel
 from sqlmodel import Session
 
 from .database.database import create_db_and_tables, get_session
-from .routers import media
+from .routers import auth, media
         
 class Fruit(BaseModel):
     name: str
@@ -37,7 +37,7 @@ class File(BaseModel):
 
 
 app = FastAPI()
-# app.include_router(auth.router)
+app.include_router(auth.router)
 app.include_router(media.router)
 MEDIA_DIRECTORY = os.getenv('MEDIA_DIRECTORY')
 app.mount(MEDIA_DIRECTORY, StaticFiles(directory=MEDIA_DIRECTORY))

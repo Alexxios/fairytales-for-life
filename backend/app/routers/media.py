@@ -22,7 +22,7 @@ def allowed_file(filename: str) -> bool:
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-router = APIRouter(prefix="/media")
+router = APIRouter(prefix="/media", tags=["Media"])
 # router.mount(MEDIA_DIRECTORY, StaticFiles(directory=MEDIA_DIRECTORY))
 
 from fastapi import Query
@@ -132,16 +132,6 @@ async def upload_media(
             }
         },
     )
-
-# @router.get("/{filename}")
-# async def get_file(filename: str):
-#     """Возвращает файл из папки media."""
-#     file_path = os.path.join(MEDIA_DIRECTORY, filename)
-#     if not os.path.exists(file_path):
-#         raise HTTPException(status_code=404, detail="File not found")
-
-#     return FileResponse(file_path)
-
 
 
 @router.delete("/{filename}")

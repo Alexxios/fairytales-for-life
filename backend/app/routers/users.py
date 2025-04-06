@@ -19,7 +19,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
-router = APIRouter(prefix="/users", tags="Users")
+router = APIRouter(prefix="/users", tags=["Users"])
 
 # --- Вспомогательные функции ---
 

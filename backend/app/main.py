@@ -14,27 +14,6 @@ from sqlmodel import Session
 from .database.database import create_db_and_tables, get_session
 from .routers import auth, media, users
         
-class Fruit(BaseModel):
-    name: str
-
-class Fruits(BaseModel):
-    fruits: List[Fruit]
-    
-class Subtheme(BaseModel):
-    name: str
-    
-class Theme(BaseModel):
-    name: str
-    subthemes: List[Subtheme]
-
-class Themes(BaseModel):
-    themes: List[Theme]
-
-
-class File(BaseModel):
-    name: str
-
-
 
 app = FastAPI()
 app.include_router(auth.router)
@@ -53,44 +32,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"]
 )
-
-"""
-theme1 = Theme(
-    name="Тема 1",
-    subthemes=[
-        Subtheme(name="Подтема 1"),
-        Subtheme(name="Подтема 2"),
-        Subtheme(name="Подтема 3"), 
-        Subtheme(name="Подтема 4")
-    ])
-theme2 = Theme(
-    name="Тема 2",
-    subthemes= [
-        Subtheme(name="Подтема 1"),
-        Subtheme(name="Подтема 2")
-    ])
-
-memory_db = {
-    "fruits": [],
-    "themes": [theme1, theme2]
-}
-
-
-@app.get("/fruits", response_model=Fruits)
-def get_fruits():
-    return Fruits(fruits=memory_db["fruits"])
-
-
-@app.post("/fruits")
-def add_fruit(fruit: Fruit):
-    memory_db["fruits"].append(fruit)
-    return fruit
-
-
-@app.get("/themes", response_model=Themes)
-def get_themes():
-    return Themes(themes=memory_db["themes"])
-"""
 
 @app.on_event("startup")
 def on_startup():

@@ -27,7 +27,7 @@ export function MediaLibrary() {
             </header>
             <main>
                 {media.map((file, index) => (
-                    <AudioPlayer url={"http://localhost:8000" + file.filepath} />
+                    <AudioPlayer audioSrc={"http://localhost:8000" + file.filepath} />
                 ))}
             </main>
         </div>

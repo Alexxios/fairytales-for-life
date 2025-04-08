@@ -10,13 +10,13 @@ export function Navbar() {
                 <button>Главная</button>
             </Link>
             <Link to="/page1">
-                <button>Page 1</button>
+                <button>Медиатека</button>
             </Link>
             <Link to="/page2">
                 <button>Page 2</button>
             </Link>
             <Link to="/page3">
-                <button>Page 3</button>
+                <button>Обратная связь</button>
             </Link>
         </div>
     )

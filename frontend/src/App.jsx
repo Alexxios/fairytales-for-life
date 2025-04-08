@@ -3,7 +3,7 @@ import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 import { Home } from './pages/Home'
 import { MediaLibrary } from './pages/MediaLibrary'
 import { Page2 } from './pages/Page2'
-import { Page3 } from './pages/Page3'
+import { Feedback } from './pages/Feedback'
 import { FileUploader } from './pages/Admin';
 import { Layout } from './Layout';
 
@@ -15,7 +15,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/page1' element={<MediaLibrary />} />
           <Route path='/page2' element={<FileUploader />} />
-          <Route path='/page3' element={<Page3 />} />
+          <Route path='/page3' element={<Feedback />} />
         </Route>
         </Routes>
     </Router>

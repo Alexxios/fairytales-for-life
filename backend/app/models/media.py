@@ -47,8 +47,3 @@ class Media(SQLModel, table=True):
         nullable=False,
         description="Дата и время последнего обновления записи"
     )
-
-    # class Config:
-    #     # Автоматическое обновление updated_at при изменении записи
-    #     # Требует дополнительной логики в обработчиках
-    #     pass

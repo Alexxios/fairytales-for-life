@@ -146,3 +146,12 @@ async def delete_file(filename: str):
                 detail=f"Failed to delete file: {file_error}"
             )
     return True
+
+
+@router.put("/upload-audio")
+async def upload_audio():
+    pass
+
+@router.put("/upload-picture")
+async def upload_picture():
+    pass

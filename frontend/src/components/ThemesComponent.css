@@ -1,0 +1,117 @@
+.themes-container {
+    font-family: Arial, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: left;
+    overflow-y: auto;
+    max-height: 100vh;
+  }
+  
+  .root-theme-title {
+    color: #333;
+    font-size: 32px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  
+  .back-button {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    transition: color 0.2s;
+  }
+  
+  .back-button:hover {
+    color: #333;
+  }
+  
+  .subthemes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .subtheme {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .subtheme:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+  .subtheme-title {
+    color: #444;
+    font-size: 20px;
+    margin: 0 0 10px 0;
+  }
+  
+  .divider {
+    height: 1px;
+    background: #ddd;
+    margin-bottom: 15px;
+    width: 100%;
+  }
+  
+  .subtheme-items-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  
+  .subtheme-item {
+    padding: 8px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .works-container {
+    width: 100%;
+  }
+  
+  .works-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+  }
+  
+  .work-item {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 150px;
+    max-width: 200px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .work-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 8px;
+    color: #666;
+  }
+  
+  .work-title {
+    font-weight: bold;
+    margin-bottom: 4px;
+    word-break: break-word;
+  }
+  
+  .work-author {
+    color: #666;
+    font-size: 14px;
+  }

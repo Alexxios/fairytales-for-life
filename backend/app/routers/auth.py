@@ -15,7 +15,7 @@ from ..database.database import get_session
 # Настройки JWT
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = os.getenv("ALGORITHM")
-ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -39,7 +39,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -
 # --- Роуты ---
 
 @router.post("/register", response_model=User)
-def register_user(
+async def register_user(
     username: str,
     password: str,
     db: Annotated[Session, Depends(get_session)]
@@ -51,12 +51,12 @@ def register_user(
     hashed_password = get_password_hash(password)
     user = User(username=username, password=hashed_password)
     db.add(user)
-    db.commit()
-    db.refresh(user)
+    await db.commit()
+    await db.refresh(user)
     return user
 
 @router.post("/login")
-def login_for_access_token(
+async def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     db: Annotated[Session, Depends(get_session)]
 ):
@@ -67,8 +67,10 @@ def login_for_access_token(
             detail="Неверные учётные данные",
         )
 
-    user.last_login = datetime.now()
+    user.last_login = datetime.utcnow()
+    db.add(user)
     db.commit()
+    db.refresh(user)
 
     access_token = create_access_token(
         data={"sub": user.username},

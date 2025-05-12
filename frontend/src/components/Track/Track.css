@@ -1,0 +1,31 @@
+.track {
+    display: flex;
+    padding: 10px 15px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .track:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .track.current {
+    background-color: #f0f0f0;
+  }
+  
+  .track-title {
+    flex: 3;
+    font-weight: 500;
+  }
+  
+  .track-artist {
+    flex: 2;
+    color: #666;
+  }
+  
+  .track-duration {
+    flex: 1;
+    text-align: right;
+    color: #666;
+  }

@@ -1,11 +1,12 @@
 import './App.css';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 import { Navbar } from './components/Navbar';
-import { Home } from './pages/Home'
-import { MediaLibrary } from './pages/MediaLibrary'
-import { Page2 } from './pages/Page2'
-import { Feedback } from './pages/Feedback'
-import { FileUploader } from './pages/Admin';
+import Home from './pages/Home'
+import MediaLibrary from './pages/MediaLibrary'
+import MapPage from './pages/MapPage'
+import Feedback from './pages/Feedback'
+import Admin from './pages/Admin';
+// import { AuthPage } from './pages/AuthPage';
 
 function App() {
   return (
@@ -18,8 +19,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/media" element={<MediaLibrary />} />
             <Route path="/gallery" element={null} />
-            <Route path="/manage" element={<FileUploader />} />
-            <Route path="/map" element={<Page2 />} />
+            <Route path="/manage" element={<Admin />} />
+            <Route path="/map" element={<MapPage />} />
             <Route path="/about" element={null} />
             <Route path="/feedback" element={<Feedback />} />
           </Routes>

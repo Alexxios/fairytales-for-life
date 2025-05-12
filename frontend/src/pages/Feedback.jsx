@@ -1,7 +1,7 @@
 
 import FeedbackForm from "../components/FeedbackForm"
 
-export function Feedback() {
+const Feedback = () => {
     return (
         <div>
           <header>
@@ -13,3 +13,4 @@ export function Feedback() {
         </div>
       );
 }
+export default Feedback;

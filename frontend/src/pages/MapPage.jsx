@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import ClusterMap from "../components/ClusterMap";
 
-
-
-
-export function Page2() {
+const MapPage = () => {
     const [users, setUsers] = useState([
         { id: 1, lng: 37.617634, lat: 55.755819, name: "Москва" },
         { id: 2, lng: 30.315868, lat: 59.939095, name: "Санкт-Петербург" },
@@ -38,3 +35,4 @@ export function Page2() {
     </div>
     );
 }
+export default MapPage;

@@ -4,7 +4,7 @@ import ThemeList from "../components/Themes"
 import { useState } from 'react';
 import ThemesComponent from '../components/ThemesComponent';
 
-export function Home() {
+const Home = () => {
 
     const [currentTheme, setCurrentTheme] = useState({
         id: 1,
@@ -49,3 +49,4 @@ export function Home() {
         </div>
     )
 }
+export default Home;

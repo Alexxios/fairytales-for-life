@@ -1,52 +1,54 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useSwipeable } from 'react-swipeable';
+import './Admin.css';
 
-export function FileUploader() {
-  const [imagePreview, setImagePreview] = useState(null);
-  const [audioPreview, setAudioPreview] = useState(null);
+import TrackManager from '../components/TrackManager';
 
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setImagePreview(null);
-    }
-  };
+const SwipeableScreen = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const screens = [
+    <div key={0} className="screen-content"><TrackManager/></div>,
+    <div key={1} className="screen-content">Еще один компонент</div>,
+    <div key={2} className="screen-content">Третий компонент</div>
+  ];
 
-  const handleAudioChange = (event) => {
-    const file = event.target.files[0];
-    if (file && file.type.startsWith('audio/')) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAudioPreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setAudioPreview(null);
-    }
-  };
+  const handlers = useSwipeable({
+    onSwipedLeft: () => {
+      setActiveIndex(prev => Math.min(prev + 1, screens.length - 1));
+    },
+    onSwipedRight: () => {
+      setActiveIndex(prev => Math.max(prev - 1, 0));
+    },
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true
+  });
 
   return (
-    <div>
-      <h2>Upload Image and Audio</h2>
-      <div>
-        <label>
-          Upload Image:
-          <input type="file" accept="image/*" onChange={handleImageChange} />
-        </label>
-        {imagePreview && <img src={imagePreview} alt="Preview" style={{ width: '200px', marginTop: '10px' }} />}
+    <div className="admin">
+      <div {...handlers} className="swipe-container">
+        <div 
+          className="screens-wrapper"
+          style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+        >
+          {screens.map((screen, index) => (
+            <div key={index} className="screen">
+              {screen}
+            </div>
+          ))}
+        </div>
       </div>
-      <div>
-        <label>
-          Upload Audio:
-          <input type="file" accept="audio/*" onChange={handleAudioChange} />
-        </label>
-        {audioPreview && <audio controls src={audioPreview} style={{ marginTop: '10px' }} />}
+      
+      <div className="screen-indicator">
+        {screens.map((_, index) => (
+          <div 
+            key={index}
+            className={`indicator-dot ${index === activeIndex ? 'active' : ''}`}
+            onClick={() => setActiveIndex(index)}
+          />
+        ))}
       </div>
     </div>
   );
 };
+
+export default SwipeableScreen;

@@ -1,0 +1,26 @@
+.track-list {
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .track-list-header {
+    display: flex;
+    padding: 10px 15px;
+    background-color: #f5f5f5;
+    font-weight: 600;
+    color: #666;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .header-title {
+    flex: 3;
+  }
+  
+  .header-artist {
+    flex: 2;
+  }
+  
+  .header-duration {
+    flex: 1;
+    text-align: right;
+  }

@@ -1,9 +1,9 @@
-
+import "./Feedback.css"
 import FeedbackForm from "../components/FeedbackForm"
 
 const Feedback = () => {
     return (
-        <div>
+        <div className="feedback">
           <header>
             <h1>Обратная связь</h1>
           </header>

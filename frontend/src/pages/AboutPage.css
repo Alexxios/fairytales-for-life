@@ -1,0 +1,108 @@
+.aboutPage {
+    width: 75%;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .hero {
+    text-align: center;
+    padding: 4rem 0;
+    background-color: #f8f9fa;
+    margin-bottom: 3rem;
+    border-radius: 8px;
+  }
+  
+  .tagline {
+    font-size: 1.2rem;
+    color: #666;
+  }
+  
+  .storySection {
+    display: flex;
+    gap: 3rem;
+    margin-bottom: 4rem;
+    align-items: center;
+  }
+  
+  .content {
+    flex: 1;
+  }
+  
+  .imageContainer {
+    flex: 1;
+  }
+  
+  .storyImage {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .missionSection {
+    background-color: #f0f8ff;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 3rem;
+  }
+  
+  .valuesList {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .valuesList li {
+    padding: 0.5rem 0;
+    position: relative;
+    padding-left: 1.5rem;
+  }
+  
+  .valuesList li::before {
+    content: "•";
+    color: #4a6bdf;
+    font-size: 1.5rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  
+  .teamSection {
+    margin-bottom: 3rem;
+  }
+  
+  .teamGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  
+  .teamCard {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .teamCard:hover {
+    transform: translateY(-5px);
+  }
+  
+  .memberImage {
+    width: 100px;
+    height: 100px;
+    background-color: #ddd;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+  }
+  
+  .role {
+    color: #4a6bdf;
+    font-weight: bold;
+    margin: 0.5rem 0;
+  }
+  
+  .bio {
+    color: #666;
+    font-size: 0.9rem;
+  }

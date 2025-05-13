@@ -1,7 +1,7 @@
 import os
 from fastapi import APIRouter, Depends, HTTPException, status, Query, File, UploadFile, Form
-from sqlmodel import Session
-from typing import List, Optional, Annotated
+from sqlmodel import Session, select, func
+from typing import List, Optional, Annotated, Dict, Tuple
 
 import mutagen
 
@@ -174,6 +174,42 @@ async def search_tracks(
     service = TrackService(db)
     tracks = service.search_tracks(query, skip, limit)
     return [enrich_track_response(track) for track in tracks]
+
+@router.get("/grouped/", response_model=dict)
+async def get_tracks_grouped(
+    db: Annotated[Session, Depends(get_session)],
+    group_by: Tuple[str, ...] = Query(["theme"], description="Поля для группировки (theme, subtheme, author)")
+):
+    """
+    Получить треки, сгруппированные по указанным полям.
+    Примеры:
+    - /tracks/grouped/?group_by=theme
+    - /tracks/grouped/?group_by=theme&group_by=subtheme
+    - /tracks/grouped/?group_by=author
+    """
+    # Валидация полей группировки
+    valid_fields = {"theme", "subtheme", "author"}
+    for field in group_by:
+        if field not in valid_fields:
+            return {"error": f"Invalid field '{field}' for grouping. Valid fields are: {valid_fields}"}
+
+    query = select(Track)
+    tracks = db.exec(query).all()
+
+    grouped = {}
+    
+    for track in tracks:
+        current_level = grouped
+        for field in group_by[:-1]:
+            field_value = getattr(track, field, None) or f"Без {field}"
+            current_level = current_level.setdefault(field_value, {})
+        
+        last_field = group_by[-1]
+        last_field_value = getattr(track, last_field, None) or f"Без {last_field}"
+        current_level.setdefault(last_field_value, []).append(enrich_track_response(track))
+    
+    return grouped
+
 
 def enrich_track_response(track: Track) -> TrackRead:
     """Дополнение данных трека для ответа (например, имя артиста)"""

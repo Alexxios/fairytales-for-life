@@ -42,6 +42,7 @@ const Home = () => {
 
     return (
         <div className="home">
+            <header><h1>Главная</h1></header>
             <main>
                 <ThemesComponent initialTheme={currentTheme} />
             </main>

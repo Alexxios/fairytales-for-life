@@ -11,6 +11,7 @@ import MapPage from './pages/MapPage'
 import Feedback from './pages/Feedback'
 import Admin from './pages/Admin';
 import AuthPage from './pages/AuthPage';
+import AboutPage from './pages/AboutPage';
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
               <Route path="/gallery" element={null} />
               <Route path="/manage" element={<Admin />} />
               <Route path="/map" element={<MapPage />} />
-              <Route path="/about" element={null} />
+              <Route path="/about" element={<AboutPage />} />
               <Route path="/feedback" element={<Feedback />} />
               <Route path="/auth" element={<AuthPage />} />
             </Routes>

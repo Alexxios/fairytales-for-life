@@ -40,19 +40,20 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -
 
 @router.post("/register", response_model=User)
 async def register_user(
-    username: str,
+    email: str,
     password: str,
+    username: str,
     db: Annotated[Session, Depends(get_session)]
 ):
-    existing_user = db.exec(select(User).where(User.username == username)).first()
+    existing_user = db.exec(select(User).where(User.email == email)).first()
     if existing_user:
-        raise HTTPException(status_code=400, detail="Имя пользователя занято")
+        raise HTTPException(status_code=400, detail="Аккаунт с таким электронным адресом уже существует")
 
     hashed_password = get_password_hash(password)
-    user = User(username=username, password=hashed_password)
+    user = User(email=email, username=username, password=hashed_password)
     db.add(user)
-    await db.commit()
-    await db.refresh(user)
+    db.commit()
+    db.refresh(user)
     return user
 
 @router.post("/login")
@@ -60,7 +61,7 @@ async def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     db: Annotated[Session, Depends(get_session)]
 ):
-    user = db.exec(select(User).where(User.username == form_data.username)).first()
+    user = db.exec(select(User).where(User.email == form_data.username)).first()
     if not user or not verify_password(form_data.password, user.password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

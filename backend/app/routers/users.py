@@ -9,7 +9,7 @@ from jwt.exceptions import InvalidTokenError
 from passlib.context import CryptContext
 from sqlmodel import Session, select
 
-from ..models.user import UserRole, User
+from ..models.user import UserRole, User, UserRead
 from ..database.database import get_session
 
 # Настройки JWT
@@ -59,11 +59,13 @@ async def get_current_admin(
 
 # --- Роуты ---
 
-@router.get("/me", response_model=User)
+@router.get("/me", response_model=UserRead)
 async def read_users_me(
     current_user: Annotated[User, Depends(get_current_user)],
 ):
-    return current_user
+    return UserRead(
+        **current_user.model_dump()
+    )
 
 @router.patch("/{username}/set-role", response_model=User)
 def set_user_role(
